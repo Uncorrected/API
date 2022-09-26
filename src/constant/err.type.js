@@ -8,7 +8,13 @@ const userAlreadyExisted = {
     message: '用户已经存在',
     result: null
 }
+const userRegisterError = {
+    code: '10003',
+    message: '用户注册错误',
+    result: null
+}
 export {
     userFormateError,
-    userAlreadyExisted
+    userAlreadyExisted,
+    userRegisterError
 }

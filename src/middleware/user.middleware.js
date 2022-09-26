@@ -1,5 +1,5 @@
 import userService from '../service/user.service.js'
-import { userFormateError, userAlreadyExisted } from '../constant/err.type.js'
+import { userFormateError, userAlreadyExisted, userRegisterError } from '../constant/err.type.js'
 const { getUserInfo } = userService
 
 const userValidator = async (ctx, next) => {
@@ -20,11 +20,12 @@ const verifyUser = async (ctx, next) => {
             ctx.app.emit('error', userAlreadyExisted, ctx)
             return
         }
-        await next()
     } catch (err) {
         console.error(err)
+        ctx.app.emit('error', userRegisterError, ctx)
         return
     }
+    await next()
 }
 
 export default {

@@ -1,6 +1,6 @@
 import userService from '../service/user.service.js'
 const { createUser } = userService
-
+import { userRegisterError } from '../constant/err.type.js'
 class UserController {
     async register(ctx, next) {
         const { user_name, password } = ctx.request.body
@@ -16,6 +16,7 @@ class UserController {
             }
         } catch (err) {
             console.error(err)
+            ctx.app.emit('error', userRegisterError, ctx)
             return
         }
     }
