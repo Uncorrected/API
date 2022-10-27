@@ -1,6 +1,6 @@
-const userFormateError = {
+const paramsError = {
     code: '10001',
-    message: '缺少参数',
+    message: '参数错误',
     result: null
 }
 const userAlreadyExisted = {
@@ -30,12 +30,12 @@ const userLoginError = {
     result: null
 }
 
-const changePWDError = {
+const changePasswordError = {
     code: '10007',
     message: '修改密码失败',
     result: null
 }
-// const changePWDError = {
+// const changePasswordError = {
 //     code: '10008',
 //     message: '修改密码错误',
 //     result: null
@@ -47,19 +47,38 @@ const tokenExpiredError = {
     result: null
 }
 const invalidToken = {
-    code: '10101',
+    code: '10102',
     message: '无效的token',
+    result: null
+}
+const hasNotAdminPermission = {
+    code: '10103',
+    message: '没有管理员权限',
+    result: null
+}
+
+const fileUploadError = {
+    code: '10201',
+    message: '文件上传失败',
+    result: null
+}
+const unsupportedFiletype = {
+    code: '10202',
+    message: '不支持的文件类型',
     result: null
 }
 
 export {
-    userFormateError,
+    paramsError,
     userAlreadyExisted,
     userRegisterError,
     userNothingness,
     invalidPassword,
     userLoginError,
-    changePWDError,
+    changePasswordError,
     tokenExpiredError,
-    invalidToken
+    invalidToken,
+    hasNotAdminPermission,
+    fileUploadError,
+    unsupportedFiletype
 }

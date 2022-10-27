@@ -1,11 +1,12 @@
 import jwt from 'jsonwebtoken'
 import env from '../config/config.default.js'
 const { JWT_SECRET } = env
-import { tokenExpiredError, invalidToken } from '../constant/err.type.js'
+import { tokenExpiredError, invalidToken, hasNotAdminPermission } from '../constant/err.type.js'
 
+//认证
 const auth = async (ctx, next) => {
     const { authorization } = ctx.request.header
-    console.log(authorization)
+    // console.log(authorization)
     if (!authorization) {
         ctx.app.emit('error', "没有携带token", ctx)
         return
@@ -14,7 +15,7 @@ const auth = async (ctx, next) => {
         const token = authorization.replace('Bearer ', '')
         const user = jwt.verify(token, JWT_SECRET)
         ctx.state.user = user
-        console.log(ctx.state.user)
+        // console.log(ctx.state.user)
     } catch (err) {
         switch (err.name) {
             case 'TokenExpiredError':
@@ -31,6 +32,17 @@ const auth = async (ctx, next) => {
     await next()
 }
 
+//授权
+const handleAdminPermission = async (ctx, next) => {
+    const { is_admin } = ctx.state.user
+    if (!is_admin) {
+        ctx.app.emit('error', hasNotAdminPermission, ctx)
+        return
+    }
+    await next()
+}
+
 export {
-    auth
+    auth,
+    handleAdminPermission
 }

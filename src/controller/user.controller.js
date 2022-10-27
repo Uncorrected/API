@@ -3,7 +3,7 @@ import env from '../config/config.default.js'
 const { JWT_SECRET } = env
 import userService from '../service/user.service.js'
 const { createUser, getUserInfo, upDateUser } = userService
-import { userRegisterError, changePWDError } from '../constant/err.type.js'
+import { userRegisterError, changePasswordError } from '../constant/err.type.js'
 class UserController {
     async register(ctx, next) {
         const { user_name, password } = ctx.request.body
@@ -42,7 +42,7 @@ class UserController {
         }
     }
 
-    async changePWD(ctx, next) {
+    async changePassword(ctx, next) {
         const { id } = ctx.state.user
         const { password } = ctx.request.body
         // console.log(id, password)
@@ -50,7 +50,7 @@ class UserController {
             const res = await upDateUser({ id, password })
             // console.log(res)
             if (!res) {
-                ctx.app.emit('error', changePWDError, ctx)
+                ctx.app.emit('error', changePasswordError, ctx)
                 return
             }
             ctx.body = {
