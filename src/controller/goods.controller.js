@@ -1,10 +1,13 @@
-import { paramsError, fileUploadError, unsupportedFiletype } from "../constant/err.type.js"
+import { paramsError, fileUploadError, unsupportedFiletype, publishGoodsError } from "../constant/err.type.js"
+import Goods from '../service/goods.service.js'
+
+const { createGoods } = Goods
 
 class GoodsController {
     async upload(ctx, next) {
         // console.log(ctx.request.files)
         const { files } = ctx.request
-        // console.log(files)
+        // console.log(files.img.mimetype)
         if (!files) {
             ctx.app.emit('error', paramsError, ctx)
             return
@@ -14,7 +17,7 @@ class GoodsController {
             ctx.app.emit('error', fileUploadError, ctx)
             return
         }
-        if (!fileType.includes(files.img.type)) {
+        if (!fileType.includes(files.img.mimetype)) {
             ctx.app.emit('error', unsupportedFiletype, ctx)
             return
         }
@@ -25,6 +28,22 @@ class GoodsController {
             result: {
                 goodsUrl: files.img.newFilename
             }
+        }
+    }
+
+    async create(ctx, next) {
+        try {
+            const { createdAt, updatedAt, ...res } = await createGoods(ctx.request.body)
+            console.log(res)
+            ctx.body = {
+                code: '0',
+                message: '商品上传成功',
+                result: res
+            }
+        } catch (err) {
+            console.log(err)
+            ctx.app.emit('error', publishGoodsError, ctx)
+            return
         }
     }
 }

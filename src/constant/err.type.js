@@ -1,37 +1,40 @@
 const paramsError = {
-    code: '10001',
+    code: '10000',
     message: '参数错误',
     result: null
 }
+
+// 00 用户模块
+// -- 注册
 const userAlreadyExisted = {
-    code: '10002',
+    code: '10001',
     message: '用户已经存在',
     result: null
 }
 const userRegisterError = {
-    code: '10003',
+    code: '00002',
     message: '用户注册错误',
     result: null
 }
-
+// -- 登录
 const userNothingness = {
-    code: '10004',
+    code: '10003',
     message: '用户不存在',
     result: null
 }
 const invalidPassword = {
-    code: '10005',
+    code: '10004',
     message: '密码不匹配',
     result: null
 }
 const userLoginError = {
-    code: '10006',
+    code: '00005',
     message: '登录错误',
     result: null
 }
-
+// -- 修改密码
 const changePasswordError = {
-    code: '10007',
+    code: '00006',
     message: '修改密码失败',
     result: null
 }
@@ -41,6 +44,7 @@ const changePasswordError = {
 //     result: null
 // }
 
+// 01 鉴权模块
 const tokenExpiredError = {
     code: '10101',
     message: 'token过期',
@@ -57,6 +61,7 @@ const hasNotAdminPermission = {
     result: null
 }
 
+// 02 商品模块
 const fileUploadError = {
     code: '10201',
     message: '文件上传失败',
@@ -67,6 +72,12 @@ const unsupportedFiletype = {
     message: '不支持的文件类型',
     result: null
 }
+const publishGoodsError = {
+    code: '00203',
+    message: '发布商品失败',
+    result: null
+}
+
 
 export {
     paramsError,
@@ -80,5 +91,6 @@ export {
     invalidToken,
     hasNotAdminPermission,
     fileUploadError,
-    unsupportedFiletype
+    unsupportedFiletype,
+    publishGoodsError
 }
