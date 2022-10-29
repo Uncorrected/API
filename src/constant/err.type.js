@@ -77,7 +77,16 @@ const publishGoodsError = {
     message: '发布商品失败',
     result: null
 }
-
+const invalidGoodId = {
+    code: '00204',
+    message: '商品不存在',
+    result: null
+}
+const updateGoodsError = {
+    code: '00205',
+    message: '更新商品失败',
+    result: null
+}
 
 export {
     paramsError,
@@ -92,5 +101,7 @@ export {
     hasNotAdminPermission,
     fileUploadError,
     unsupportedFiletype,
-    publishGoodsError
+    publishGoodsError,
+    invalidGoodId,
+    updateGoodsError
 }

@@ -16,7 +16,7 @@ class UserService {
         })
         return res?.dataValues || null
     }
-    async upDateUser({ id, user_name, password, is_admin }) {
+    async updateUser({ id, user_name, password, is_admin }) {
         const whereOpt = { id }
         const newUser = {}
         user_name && Object.assign(newUser, { user_name })

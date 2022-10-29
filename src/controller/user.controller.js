@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import env from '../config/config.default.js'
 const { JWT_SECRET } = env
 import userService from '../service/user.service.js'
-const { createUser, getUserInfo, upDateUser } = userService
+const { createUser, getUserInfo, updateUser } = userService
 import { userRegisterError, changePasswordError } from '../constant/err.type.js'
 class UserController {
     async register(ctx, next) {
@@ -47,7 +47,7 @@ class UserController {
         const { password } = ctx.request.body
         // console.log(id, password)
         try {
-            const res = await upDateUser({ id, password })
+            const res = await updateUser({ id, password })
             // console.log(res)
             if (!res) {
                 ctx.app.emit('error', changePasswordError, ctx)

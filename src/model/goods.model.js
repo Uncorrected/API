@@ -24,6 +24,6 @@ const Goods = seq.define('zd_goods', {
     }
 })
 
-Goods.sync()
+// Goods.sync()
 
 export default Goods

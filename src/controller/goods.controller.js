@@ -1,7 +1,7 @@
-import { paramsError, fileUploadError, unsupportedFiletype, publishGoodsError } from "../constant/err.type.js"
+import { paramsError, fileUploadError, unsupportedFiletype, publishGoodsError, invalidGoodId, updateGoodsError } from "../constant/err.type.js"
 import Goods from '../service/goods.service.js'
 
-const { createGoods } = Goods
+const { createGoods, updateGoods } = Goods
 
 class GoodsController {
     async upload(ctx, next) {
@@ -44,6 +44,25 @@ class GoodsController {
             console.log(err)
             ctx.app.emit('error', publishGoodsError, ctx)
             return
+        }
+    }
+    async update(ctx, next) {
+        try {
+            console.log(ctx.request.body)
+            const res = await updateGoods(ctx.request.body)
+            console.log(res)
+            if (!res) {
+                ctx.app.emit('error', invalidGoodId, ctx)
+                return
+            }
+            ctx.body = {
+                code: "0",
+                message: "修改商品信息成功",
+                result: null
+            }
+        } catch (err) {
+            console.log(err)
+            ctx.app.emit('error', updateGoodsError, ctx)
         }
     }
 }
