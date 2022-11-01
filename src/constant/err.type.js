@@ -87,6 +87,16 @@ const updateGoodsError = {
     message: '更新商品失败',
     result: null
 }
+const offShelvesGoodsError = {
+    code: '00206',
+    message: '下架商品失败',
+    result: null
+}
+const removeGoodsError = {
+    code: '00207',
+    message: '删除商品失败',
+    result: null
+}
 
 export {
     paramsError,
@@ -103,5 +113,7 @@ export {
     unsupportedFiletype,
     publishGoodsError,
     invalidGoodId,
-    updateGoodsError
+    updateGoodsError,
+    offShelvesGoodsError,
+    removeGoodsError
 }

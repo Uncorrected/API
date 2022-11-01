@@ -22,8 +22,10 @@ const Goods = seq.define('zd_goods', {
         allowNull: true,
         comment: '商品图片URL'
     }
+}, {
+    paranoid: true
 })
 
-// Goods.sync()
+// Goods.sync({ force: true })
 
 export default Goods

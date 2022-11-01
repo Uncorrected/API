@@ -1,7 +1,7 @@
-import { paramsError, fileUploadError, unsupportedFiletype, publishGoodsError, invalidGoodId, updateGoodsError } from "../constant/err.type.js"
+import { paramsError, fileUploadError, unsupportedFiletype, publishGoodsError, invalidGoodId, updateGoodsError, offShelvesGoodsError, removeGoodsError } from "../constant/err.type.js"
 import Goods from '../service/goods.service.js'
 
-const { createGoods, updateGoods } = Goods
+const { createGoods, updateGoods, offShelvesGoods, removeGoods, findGoods } = Goods
 
 class GoodsController {
     async upload(ctx, next) {
@@ -48,8 +48,9 @@ class GoodsController {
     }
     async update(ctx, next) {
         try {
-            console.log(ctx.request.body)
-            const res = await updateGoods(ctx.request.body)
+            // console.log(ctx.request.body)
+            console.log(ctx.params)
+            const res = await updateGoods(ctx.params.id, ctx.request.body)
             console.log(res)
             if (!res) {
                 ctx.app.emit('error', invalidGoodId, ctx)
@@ -63,6 +64,54 @@ class GoodsController {
         } catch (err) {
             console.log(err)
             ctx.app.emit('error', updateGoodsError, ctx)
+        }
+    }
+    // async changeStatus(ctx, next) {
+    //     try {
+    //         console.log(ctx.params, ctx.body.status)
+    //         let res;
+    //         if (ctx.bodu.status = 'off') {
+    //             res = await offShelvesGoods(ctx.params.id)
+    //         } else {
+    //             res = await onShelvesGoods(ctx.params.id)
+    //         }
+    //         // console.log(res)
+    //         if (!res) {
+    //             ctx.app.emit('error', invalidGoodId, ctx)
+    //             return
+    //         }
+    //         ctx.body = "下架商品成功"
+    //     } catch (err) {
+    //         console.log(err)
+    //         ctx.app.emit('error', offShelvesGoodsError, ctx)
+    //     }
+    // }
+    async remove(ctx, next) {
+        try {
+            const res = await removeGoods(ctx.params.id)
+            console.log(res)
+            if (!res) {
+                ctx.app.emit('error', invalidGoodId, ctx)
+                return
+            }
+            ctx.body = "删除商品成功"
+        } catch (err) {
+            console.log(err)
+            ctx.app.emit('error', removeGoodsError, ctx)
+        }
+    }
+    async findAll(ctx, next) {
+        try {
+            const { pageNum, pageSize } = ctx.request.query
+            const res = await findGoods(pageNum, pageSize)
+            ctx.body = {
+                code: '0',
+                message: '获取商品列表成功',
+                result: res
+            }
+        } catch (err) {
+            console.log(err)
+            return
         }
     }
 }
